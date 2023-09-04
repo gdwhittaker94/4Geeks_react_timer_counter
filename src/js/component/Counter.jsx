@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Header from './Header'
 
 const Counter = () => {
   const [second, setSecond] = useState(0);
@@ -32,7 +31,6 @@ const Counter = () => {
 
   return ( // The component itself 
     <div className='counter'>
-      <Header/>
       <span className='counter__numbers'>
         {' '}{hour < 10 ? `0${hour}` : hour} : {' '}{minute < 10 ? `0${minute}` : minute} :{' '}{second < 10 ? `0${second}` : second}
       </span>
