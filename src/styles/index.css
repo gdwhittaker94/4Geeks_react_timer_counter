@@ -1,12 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
-/* 
+*,
+body,
+*::before,
+*::after {
+padding: 0;
+margin: 0;
+border: 0;
+/*Remove the margin, padding and border of all elements (all browsers)*/
+font-size: 10px;
+/*10px = 1em -> pixel size/10 = #em (16px=1.6em)*/
+box-sizing: border-box;
+/*The full area/size of an element`s box is measured by its total height and width, not just the content section. The different box sections adjust to the defined box size */
+}
 
-    You can write your own styles here...
-    
-    
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
+img {
+border-style: none;
+/*Remove the border on images inside links (IE10)*/
+max-inline-size: 100%;
+/*Make image responsive but without allowing it to outgrow its original size*/
+display: block;
+/*Removes the small gap that appears under images */
+}
 
-*/
+a,
+li,
+:link,
+:visited {
+text-decoration: none;
+/*Remove default link underline styling*/
+}
+
+ul,
+ol {
+list-style: none;
+/*List markers are not commonly needed*/
+}
+
+button {
+font-family: inherit;
+font-size: 100%;
+line-height: 1.15;
+/* Change the font styles (all browsers)*/
+margin: 0;
+/* Remove the margin (Firefox, Safari) */
+text-transform: none;
+/*Remove the inheritance of text transform (Edge, Firefox, IE)*/
+outline: none;
+border: none;
+/*Remove default outline and border for these buttons*/
+-webkit-appearance: button;
+appearance: button;
+/*Correct the inability to style clickable types (IOS, Safari)*/
+}
+
+button:hover,
+input[type="submit"] {
+cursor: pointer;
+transform: translateY(-0.15rem);
+/*Buttons on hover use the pointer cursor and have a small animation*/
+}
+
+[type="button"],
+[type="reset"],
+[type="submit"] {
+-webkit-appearance: button;
+appearance: button;
+/*Correct the inability to style clickable types (IOS, Safari)*/
+}
+/**===========================CUSTOM-STYLES==============================*/
+
+:root {
+    --kaushan: 'Kaushan Script', cursive;
+    --pacifico: 'Pacifico', cursive;
+}
+
+body {
+    background-color: #fff;
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+
+}
+
+body:after {
+    content: '';
+    position: absolute;
+    inset: 0px;
+    z-index: -1;
+    background: linear-gradient(45deg, #2d4cb5, #687faf, #89b5a7, #a1ee9a);
+    background-size: 200% 200% ;
+    animation: colorChange 10000ms linear infinite;
+    overflow: hidden;
+}
+
+@keyframes colorChange {
+    0% {
+        background-position: 0 100%;
+    }
+    50% {
+        background-position: 100% 0%;
+
+    }
+    100% { 
+        background-position: 0 100%;
+    }
+}
+
+h2 {
+    margin-top: -50vh;
+    margin-bottom: 40px;
+    font-family: var(--pacifico);
+    font-size: 3rem;
+    color: #fff;
+}
+
+.counter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.counter__numbers {
+    font-family: var(--pacifico);
+    font-size: 4.5rem;
+    background-color: white;
+    padding: 0px 20px 10px;
+    border: 5px solid lightblue;
+    border-radius: 10px;
+    outline: 10px solid navy;
+    width: max(270px, 50vw);
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+
+    h2 {
+        font-size: 4rem;
+    }
+
+    .counter__numbers {
+        font-size: 6rem;
+    }
+    
+}
