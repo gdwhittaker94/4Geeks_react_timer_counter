@@ -1,0 +1,67 @@
+const countdown = () => {
+		setHour(prompt("How many hours?"));
+		setMinute(prompt("How many minutes?"));
+		setSecond(prompt("How many seconds?"));
+		setIsCounting(false);
+		setIsCounting(true);
+		startCountdown(second, minute, hour);
+	}
+
+	const startCountdown = (second, minute, hour) => {
+		if(isTiming){
+			const id = setInterval(() => { 
+				if(second === 0 && minute === 0 && hour === 0){
+					setIsTiming(false)
+				} 
+				
+				// HERE - TRYING TO FIGURE OUT HOW TO COUTDOWN - CHATGPT 
+				// MOST OF BELOW OF THIS FUNCTION IS IN PROGRESS, CAN IGNORE 
+                
+				if(second > 0 || minute > 0 || hour > 0){
+					if(second > 0) {
+						setSecond(second - 1);
+					} else {setSecond(59);
+
+					if(minute > 0) {
+						setSecond(minute - 1);
+					} else {setSecond(59);
+
+					if(second > 0) {
+						setSecond(second - 1);
+					} else {setSecond(59);
+
+					}
+					setSecond(second - 1);
+					} else {setSecond(59)};
+					if(minute >= 0)
+				}
+				
+		
+				setSecond((prevSecond) => { 
+					if (prevSecond === 0) { 
+					setMinute((prevMinute) => {
+						if (prevMinute === 0) {  
+						setHour((prevHour) => prevHour - 1); 
+						return 0; 
+						} else { 
+						return prevMinute - 1; 
+						}
+					});
+					return 0; 
+					} else { 
+					return prevSecond - 1; 
+					}
+				});
+				// Do this every second 
+				}, 1000); 
+				// Stores interval ID created on each execution 
+				setIntervalId(id); 
+		} else {
+			// Clear the interval when pausing --> ensures timer stops updating when paused 
+			clearInterval(intervalId); 
+		}
+		return () => {
+			// cleanup function: prevents interval from continuing between unmounting and mounting and going out of sync 
+			clearInterval(intervalId); 
+		};
+	}

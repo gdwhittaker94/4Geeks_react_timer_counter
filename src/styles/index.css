@@ -1,3 +1,4 @@
+/* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
 *,
@@ -111,10 +112,10 @@ body:after {
 }
 
 h2 {
-    margin-top: 40px !important;
-    margin-bottom: 40px !important;
+    margin-top: 40px;
+    margin-bottom: 40px;
     font-family: var(--pacifico);
-    font-size: 3rem !important;
+    font-size: 3rem;
     color: #fff;
     text-shadow: 2px 2px black
 }
@@ -129,13 +130,13 @@ h2 {
 
 .counter__numbers {
     font-family: var(--pacifico);
-    font-size: 4.5rem;
+    font-size: 3.5rem;
     background-color: white;
     padding: 0px 20px 10px;
     border: 5px solid lightblue;
     border-radius: 10px;
     outline: 10px solid navy;
-    width: max(280px, 50vw);
+    width: max(250px, 40vw);
     text-align: center;
 }
 
@@ -149,7 +150,7 @@ h2 {
     color: white;
     font-family: var(--pacifico);
     border: none;
-    font-size: 3rem;
+    font-size: 2rem;
     padding: 8px 12px;
     border: 1px solid white;
     border-radius: 8px;
@@ -160,20 +161,23 @@ h2 {
 }
 
 .icon {
-    height: 3rem;
+    height: 2rem;
 }
 
+.icon--play {
+    margin-right: 3px;
+}
 
-
+/* MEDIA QUERY */
 
 @media (min-width: 768px) {
 
     h2 {
-        font-size: 5.5rem;
+        font-size: 4.5rem;
     }
 
     .counter__numbers {
-        font-size: 5rem;
+        font-size: 4rem;
     }
     
 }
