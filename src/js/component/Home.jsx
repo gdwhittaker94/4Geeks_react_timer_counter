@@ -14,7 +14,7 @@ const Home = () => {
 	// BUTTONS COMPONENT STATE
 	const [isCounting, setIsCounting] = useState(false); // UP
 	const [isTiming, setIsTiming] = useState(false) // DOWN
-
+	
 	// COUNTER EFFECT
 	useEffect(() => {
 		if(isCounting){
