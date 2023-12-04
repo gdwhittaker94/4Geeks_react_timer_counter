@@ -1,4 +1,0 @@
-// Counter 
-// Timer 
-// Pause/Play, and reset buttons 
-// Alert when specific time reached 

@@ -113,12 +113,16 @@ body:after {
 }
 
 h2 {
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin-top: 10px;
+    margin-bottom: 30px;
     font-family: var(--pacifico);
     font-size: 3rem;
     color: #fff;
     text-shadow: 2px 2px black
+}
+
+.secondHeader {
+    margin-top: 0px;
 }
 
 .counter {
@@ -141,6 +145,13 @@ h2 {
     text-align: center;
 }
 
+.counter--countdown {
+    background-color: navy;
+    color: white;
+    border: 5px solid lightblue;
+    outline: 10px solid navy;
+}
+
 .buttonContainer {
     display: flex;
     gap: 10px;
@@ -161,6 +172,17 @@ h2 {
     box-shadow: 1px 1px 1px black;
 }
 
+.button-counter {
+    background-color: #fff;
+    border: 1px solid rgb(0, 0, 0);
+}
+
+.button-reset {
+    background-color: #9ade9d;
+    border: 1px solid rgb(0, 0, 0);
+    color: black;
+}
+
 .icon {
     height: 2rem;
 }
@@ -174,11 +196,11 @@ h2 {
 @media (min-width: 768px) {
 
     h2 {
-        font-size: 4.5rem;
+        font-size: 3.5rem;
     }
 
     .counter__numbers {
-        font-size: 4rem;
+        font-size: 3rem;
     }
     
 }
