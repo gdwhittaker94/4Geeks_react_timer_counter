@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Countdown = ({hour, minute, second}) => {
+const Countdown = ({CDhour, CDminute, CDsecond}) => {
   
   return (
-    <div className='counter'>
-      <span className='counter__numbers counter--countdown'>
-        {' '}{hour < 10 ? `0${hour}` : hour} : {' '}{minute < 10 ? `0${minute}` : minute} :{' '}{second < 10 ? `0${second}` : second}
+    <div className='timer'>
+      <span className='timer__numbers countdown'>
+        {' '}{CDhour < 10 ? `0${CDhour}` : CDhour} : {' '}{CDminute < 10 ? `0${CDminute}` : CDminute} :{' '}{CDsecond < 10 ? `0${CDsecond}` : CDsecond}
       </span>
     </div>
   );

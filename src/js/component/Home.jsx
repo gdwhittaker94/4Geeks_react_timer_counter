@@ -1,31 +1,113 @@
 import React, { useState, useEffect } from "react";
 import Header from './Header'
 import SecondHeader from './SecondHeader'
-import SecondsCounter from "./Counter";
+import Timer from "./Timer";
 import Countdown from "./Countdown"
 import Buttons from './Buttons';
 
 const Home = () => {
 
-	// COUNTER COMPONENT STATE
+	// --- STATE ------------------------------------------------------------
+
+	// TIMER STATE
 	const [second, setSecond] = useState(0);
 	const [minute, setMinute] = useState(0);
 	const [hour, setHour] = useState(0);
-	const [intervalId, setIntervalId] = useState(null); // Stores built-in interval ID returned by 'setInterval' function (which keeps track of which interval we're on) 
+	const [timerintervalId, setTimerIntervalId] = useState(null); //* 
+	const [isTiming, setIsTiming] = useState(false);
 
-	// BUTTONS COMPONENT STATE
-	const [isCounting, setIsCounting] = useState(false); // UP
-	const [isTiming, setIsTiming] = useState(false) // DOWN
-
-	// COUNTDOWN COMPONENT STATE 
+	// COUNTDOWN STATE 
 	const [CDsecond, setCDSecond] = useState(0);
 	const [CDminute, setCDMinute] = useState(0);
 	const [CDhour, setCDHour] = useState(0);
+	const [CDintervalId, setCDIntervalId] = useState(null); //* 
+	// const [isCountingDown, setIsCountingDown] = useState(false)
 
+	// COUNTDOWN LOCAL STATE
+	let isCountingDown = false;
+	let hours;
+	let minutes;
+	let seconds;
 
-	// COUNTER EFFECT
+	// * Stores built-in interval ID returned by 'setInterval' function (which keeps track of which interval we're on) 
+
+	// --- FUNCTIONS --------------------------------------------------------
+
+	// TIMER BUTTON
+	const timer = () => {
+		setIsTiming(!isTiming);
+	}
+
+	// RESET BUTTON 
+	const reset = () => {
+		setSecond(0);
+		setMinute(0);
+		setHour(0);
+		setCDSecond(0);
+		setCDMinute(0);
+		setCDHour(0);
+		setIsTiming(false);
+		isCountingDown = false;
+	}
+
+	// COUNTING DOWN USE_EFFECT
+	const countdownStart = (hours, minutes, seconds) => {
+		console.log("Received --- hours:", hours, "minutes:", minutes, "seconds:", seconds)
+
+		const id = setInterval(() => {
+			// If above 0 seconds
+			console.log("seconds", seconds)
+			if (seconds > 0) {
+				seconds -= 1
+				setCDSecond(seconds);
+				console.log("CDSec:", CDsecond)
+			}
+			// If at 0 seconds 
+			else if (minutes > 0) {
+				console.log("minutes", minutes)
+				minutes -= 1
+				setCDMinute(minutes);
+				console.log("CDMin:", CDminute)
+				seconds = 59
+			}
+			// If at 0 seconds and 0 minutes
+			else if (hours > 0) {
+				console.log("hours", hours)
+				hours -= 1
+				setCDHour(hours);
+				console.log("CDHour:", CDhour)
+				minutes = 59
+				seconds = 59
+			} else {
+				alert("Countdown Finished!");
+				clearInterval(id); // Clear the interval for the countdown
+				isCountingDown = false;
+			}
+		}, 1000);
+		// Stores interval ID created on each execution 
+		setCDIntervalId(id);
+		console.log("interval-id", id)
+	}
+
+	// COUNTDOWN BUTTON 
+	const countdown = () => {
+		console.log("pre-isCountingDown:", isCountingDown)
+		isCountingDown = true
+		console.log("post-isCountingDown:", isCountingDown)
+
+		hours = (parseInt(prompt("How many hours?"), 10));
+		minutes = (parseInt(prompt("How many minutes?"), 10));
+		seconds = (parseInt(prompt("How many seconds?"), 10));
+		console.log("hours:", hours, "minutes:", minutes, "seconds:", seconds)
+
+		countdownStart(hours, minutes, seconds + 1)
+	}
+
+	// --- USE_EFFECTS ---------------------------------------------------------
+
+	// TIMER USE_EFFECT
 	useEffect(() => {
-		if (isCounting) {
+		if (isTiming) {
 			// This functions creates a new interval, each interval has an ID
 			const id = setInterval(() => {
 				// prevSecond = Hook-local variable, instead of using 'external' second variable
@@ -54,101 +136,28 @@ const Home = () => {
 				// Do this every second 
 			}, 1000);
 			// Stores interval ID created on each execution 
-			setIntervalId(id);
+			setTimerIntervalId(id);
 		} else {
 			// Clear the interval when pausing --> ensures timer stops updating when paused 
-			clearInterval(intervalId);
+			clearInterval(timerintervalId);
 		}
 		return () => {
 			// cleanup function: prevents interval from continuing between unmounting and mounting and going out of sync 
-			clearInterval(intervalId);
+			clearInterval(timerintervalId);
 		};
-		// Dependency array means this effect runs only when "isCounting" = true	
-	}, [isCounting]);
+		// Dependency array means this effect runs only when "isTiming" = true	
+	}, [isTiming]);
 
 
-	// BUTTON COMPONENT EFFECTS
-	const pausePlay = () => {
-		setIsTiming(false);
-		setIsCounting(!isCounting);
-	}
+	// --- VISUAL COMPONENT ----------------------------------------------------
 
-	const clearIntervals = () => {
-		if(intervalId) {
-			clearInterval(intervalId)
-		}
-	};
+	return <div className="container">
+		<Header />
+		<Timer second={second} minute={minute} hour={hour} />
+		<SecondHeader />
+		<Countdown CDhour={CDhour} CDminute={CDminute} CDsecond={CDsecond} />
+		<Buttons timer={timer} reset={reset} countdown={countdown} />
+	</div>
+};
 
-	const reset = () => {
-		clearIntervals();
-		setSecond(0);
-		setMinute(0);
-		setHour(0);
-		setCDSecond(0);
-		setCDMinute(0);
-		setCDHour(0);
-		setIsCounting(false);
-		setIsTiming(false);
-	}
-
-	const countdown = () => {
-		setCDHour(parseInt(prompt("How many hours?"), 10));
-		setCDMinute(parseInt(prompt("How many minutes?"), 10));
-		setCDSecond(parseInt(prompt("How many seconds?"), 10));
-		setIsCounting(false);
-		setIsTiming(true);
-		startCountdown(CDhour, CDminute, CDsecond);
-	}
-
-	const startCountdown = (hour, minute, second) => {
-		if (isTiming) {
-		  const id = setInterval(() => {
-			if (second === 0 && minute === 0 && hour === 0) {
-			  setIsTiming(false);
-			  alert("Countdown Finished!");
-			  clearInterval(id);
-			} else {
-			  // Update countdown values every second
-			  if (second > 0) {
-				setCDSecond((prevSecond) => prevSecond - 1);
-			  } else {
-				// If at 0 seconds 
-				if (minute > 0) {
-				  setCDMinute((prevMinute) => prevMinute - 1);
-				  setCDSecond(59); // Reset seconds to 59 when minutes decrease
-				} else {
-				  // If at 0 minutes
-				  if (hour > 0) {
-					setCDHour((prevHour) => prevHour - 1);
-					setCDMinute(59); // Reset minutes to 59 when hours decrease
-					setCDSecond(59); // Reset seconds to 59 when hours decrease
-				  }
-				}
-			  }
-			}
-		  }, 1000);
-		  // Stores interval ID created on each execution 
-		  setIntervalId(id);
-		// } else {
-		//   // Clear the interval when pausing --> ensures timer stops updating when paused 
-		//   clearInterval(intervalId);
-		// }
-		// return () => {
-		//   // cleanup function: prevents interval from continuing between unmounting and mounting and going out of sync 
-		//   clearInterval(intervalId);
-		// };
-	  };
-	}
-	  
-
-		// VISUAL COMPONENT 
-		return <div className="container">
-			<Header />
-			<SecondsCounter second={second} minute={minute} hour={hour} /> 
-			<SecondHeader />
-			<Countdown hour={CDhour} minute={CDminute} second={CDsecond}/>
-			<Buttons pausePlay={pausePlay} reset={reset} countdown={countdown} />
-		</div>
-	};
-
-	export default Home;
+export default Home;

@@ -1,14 +1,14 @@
 import React from 'react';
 
-const Counter = ({second, minute, hour}) => {
+const Timer = ({second, minute, hour}) => {
   
   return (
-    <div className='counter'>
-      <span className='counter__numbers'>
+    <div className='timer'>
+      <span className='timer__numbers'>
         {' '}{hour < 10 ? `0${hour}` : hour} : {' '}{minute < 10 ? `0${minute}` : minute} :{' '}{second < 10 ? `0${second}` : second}
       </span>
     </div>
   );
 };
 
-export default Counter;
+export default Timer;
