@@ -10,7 +10,7 @@ padding: 0;
 margin: 0;
 border: 0;
 /*Remove the margin, padding and border of all elements (all browsers)*/
-font-size: 10px;
+font-size: 16px;
 /*10px = 1em -> pixel size/10 = #em (16px=1.6em)*/
 box-sizing: border-box;
 /*The full area/size of an element`s box is measured by its total height and width, not just the content section. The different box sections adjust to the defined box size */
@@ -147,7 +147,7 @@ p {
 
 .timer__numbers {
     font-family: var(--pacifico);
-    font-size: 3.5rem;
+    font-size: 2rem;
     background-color: white;
     padding: 0px 20px 10px;
     border: 5px solid lightblue;
@@ -205,6 +205,14 @@ p {
 
 /* MEDIA QUERY */
 
+@media (min-width: 630px) and (max-width:767px) {
+
+    .timer__numbers {
+        font-size: 3rem;
+    }
+    
+}
+
 @media (min-width: 768px) {
 
     h2 {
@@ -212,7 +220,7 @@ p {
     }
 
     .timer__numbers {
-        font-size: 3rem;
+        font-size: 3.5rem;
     }
     
 }
