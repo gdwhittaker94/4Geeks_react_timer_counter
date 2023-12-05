@@ -112,17 +112,29 @@ body:after {
     padding: 10px;
 }
 
-h2 {
+.headerDiv {
     margin-top: 10px;
     margin-bottom: 30px;
+    text-align: center;
+}
+
+h2 {
     font-family: var(--pacifico);
     font-size: 3rem;
     color: #fff;
     text-shadow: 2px 2px black
 }
 
-.secondHeader {
+p {
+    color: navy;
+    font-weight: 600;
+    font-family: 'Pacifico';
+}
+
+.secondHeaderDiv {
     margin-top: 0px;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
 .timer {
@@ -141,7 +153,7 @@ h2 {
     border: 5px solid lightblue;
     border-radius: 10px;
     outline: 10px solid navy;
-    width: max(250px, 40vw);
+    width: max(230px, 45vw);
     text-align: center;
 }
 

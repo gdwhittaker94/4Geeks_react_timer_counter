@@ -9,101 +9,46 @@ const Home = () => {
 
 	// --- STATE ------------------------------------------------------------
 
-	// TIMER STATE
+	// TIMER USE_STATE
 	const [second, setSecond] = useState(0);
 	const [minute, setMinute] = useState(0);
 	const [hour, setHour] = useState(0);
 	const [timerintervalId, setTimerIntervalId] = useState(null); //* 
 	const [isTiming, setIsTiming] = useState(false);
 
-	// COUNTDOWN STATE 
+	// COUNTDOWN USE_STATE 
 	const [CDsecond, setCDSecond] = useState(0);
 	const [CDminute, setCDMinute] = useState(0);
 	const [CDhour, setCDHour] = useState(0);
 	const [CDintervalId, setCDIntervalId] = useState(null); //* 
-	// const [isCountingDown, setIsCountingDown] = useState(false)
+
+	// * Stores built-in interval ID returned by 'setInterval' function (which keeps track of which interval we're on) 
 
 	// COUNTDOWN LOCAL STATE
-	let isCountingDown = false;
 	let hours;
 	let minutes;
 	let seconds;
 
-	// * Stores built-in interval ID returned by 'setInterval' function (which keeps track of which interval we're on) 
-
-	// --- FUNCTIONS --------------------------------------------------------
-
-	// TIMER BUTTON
-	const timer = () => {
-		setIsTiming(!isTiming);
-	}
+	// --- RESET ------------------------------------------------------------
 
 	// RESET BUTTON 
 	const reset = () => {
 		setSecond(0);
 		setMinute(0);
 		setHour(0);
-		setCDSecond(0);
-		setCDMinute(0);
-		setCDHour(0);
+		set_Hour(0);
+		set_Minute(0);
+		set_Second(0);
 		setIsTiming(false);
-		isCountingDown = false;
+		clearInterval(CDintervalId);
 	}
 
-	// COUNTING DOWN USE_EFFECT
-	const countdownStart = (hours, minutes, seconds) => {
-		console.log("Received --- hours:", hours, "minutes:", minutes, "seconds:", seconds)
+	// --- TIMER --------------------------------------------------------
 
-		const id = setInterval(() => {
-			// If above 0 seconds
-			console.log("seconds", seconds)
-			if (seconds > 0) {
-				seconds -= 1
-				setCDSecond(seconds);
-				console.log("CDSec:", CDsecond)
-			}
-			// If at 0 seconds 
-			else if (minutes > 0) {
-				console.log("minutes", minutes)
-				minutes -= 1
-				setCDMinute(minutes);
-				console.log("CDMin:", CDminute)
-				seconds = 59
-			}
-			// If at 0 seconds and 0 minutes
-			else if (hours > 0) {
-				console.log("hours", hours)
-				hours -= 1
-				setCDHour(hours);
-				console.log("CDHour:", CDhour)
-				minutes = 59
-				seconds = 59
-			} else {
-				alert("Countdown Finished!");
-				clearInterval(id); // Clear the interval for the countdown
-				isCountingDown = false;
-			}
-		}, 1000);
-		// Stores interval ID created on each execution 
-		setCDIntervalId(id);
-		console.log("interval-id", id)
+	// TIMER BUTTON
+	const timer = () => {
+		setIsTiming(!isTiming);
 	}
-
-	// COUNTDOWN BUTTON 
-	const countdown = () => {
-		console.log("pre-isCountingDown:", isCountingDown)
-		isCountingDown = true
-		console.log("post-isCountingDown:", isCountingDown)
-
-		hours = (parseInt(prompt("How many hours?"), 10));
-		minutes = (parseInt(prompt("How many minutes?"), 10));
-		seconds = (parseInt(prompt("How many seconds?"), 10));
-		console.log("hours:", hours, "minutes:", minutes, "seconds:", seconds)
-
-		countdownStart(hours, minutes, seconds + 1)
-	}
-
-	// --- USE_EFFECTS ---------------------------------------------------------
 
 	// TIMER USE_EFFECT
 	useEffect(() => {
@@ -149,6 +94,73 @@ const Home = () => {
 	}, [isTiming]);
 
 
+	// --- COUNTDOWN ----------------------------------------------------------
+
+	function set_Hour(currentHour) {
+		hours = currentHour;
+		setCDHour(currentHour);
+	}
+	function set_Minute(currentMinute) {
+		minutes = currentMinute;
+		setCDMinute(currentMinute);
+	}
+	function set_Second(currentSecond) {
+		seconds = currentSecond;
+		setCDSecond(currentSecond);
+	}
+	
+	// COUNTING DOWN USE_EFFECT
+	const countdownGo = (hours, minutes, seconds) => {
+		// console.log("Received --- hours:", hours, "minutes:", minutes, "seconds:", seconds) // Correct input
+
+		const id = setInterval(() => {
+			console.log("seconds", seconds)
+			if (seconds > 0) {
+				seconds -= 1
+				set_Second(seconds);
+				// console.log("CDSec:", CDsecond) // Shows 0
+			}
+			else if (minutes > 0) {
+				console.log("minutes", minutes)
+				minutes -= 1
+				set_Minute(minutes);
+				// console.log("CDMin:", CDminute) // Shows 0 
+				seconds = 60
+			}
+			else if (hours > 0) {
+				console.log("hours", hours)
+				hours -= 1
+				set_Hour(hours);
+				// console.log("CDHour:", CDhour) // Shows 0 
+				minutes = 60
+				seconds = 60
+			} else {
+				alert("Countdown Finished!");
+				clearInterval(id); // Clear the interval for the countdown
+			}
+		}, 1000);
+		// Stores interval ID created on each execution 
+		setCDIntervalId(id);
+		// console.log("interval-id", id) // shows id
+	}
+
+	// COUNTDOWN BUTTON 
+	const countdownPress = () => {
+		// Set local variables through prompts
+		hours = (parseInt(prompt("How many hours?"), 10));
+		minutes = (parseInt(prompt("How many minutes?"), 10));
+		seconds = (parseInt(prompt("How many seconds?"), 10));
+
+		// Function calls: Set all Countdown variables 
+		set_Hour(hours);
+		set_Minute(minutes);
+		set_Second(seconds);
+
+		// Function call: Begins visable countdown 
+		countdownGo(hours, minutes, seconds + 1)
+	}
+
+
 	// --- VISUAL COMPONENT ----------------------------------------------------
 
 	return <div className="container">
@@ -156,7 +168,7 @@ const Home = () => {
 		<Timer second={second} minute={minute} hour={hour} />
 		<SecondHeader />
 		<Countdown CDhour={CDhour} CDminute={CDminute} CDsecond={CDsecond} />
-		<Buttons timer={timer} reset={reset} countdown={countdown} />
+		<Buttons timer={timer} reset={reset} countdown={countdownPress} />
 	</div>
 };
 

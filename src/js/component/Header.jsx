@@ -2,7 +2,10 @@ import React from 'react';
 
 const Header = () => {
     return (
-        <h2>Timer</h2>
+        <div className='headerDiv'> 
+            <h2>Timer</h2>
+            <p>*Press the white button once to begin and again to pause</p>
+        </div >
     )
 }
 
